@@ -17,4 +17,4 @@
     become_user : root
 
   - name: Deploy Docker Container
-    command: docker run -itd -p 8088:8082 shaikrayees/healthcare:v1.0.0
+    command: docker run -itd -p 8086:8082 shaikrayees/healthcare-project:v1.1.0

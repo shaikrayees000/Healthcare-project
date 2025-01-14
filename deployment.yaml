@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthcare-deployment
+  labels:
+    app: healthcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: healthcare
+  template:
+    metadata:
+      labels:
+        app: healthcare
+    spec:
+      containers:
+        - name: healthcare
+          image: shaikrayees/healthcare-project:v1.1.0
+          ports:
+            - containerPort: 8082
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: healthcare-service
+spec:
+  selector:
+    app: healthcare
+  ports:
+    - protocol: TCP
+      port: 80        # Service port
+      targetPort: 8082 # Container port
+      nodePort: 30001  # NodePort (Optional, specific port)
+  type: NodePort
